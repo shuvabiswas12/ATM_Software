@@ -30,7 +30,7 @@ namespace ATM_Software
 
             // .... my added are given bellow
             services.AddDbContext<ATMDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ATMDbContext>();
+            services.AddIdentity<CustomIdentityUser, IdentityRole>().AddEntityFrameworkStores<ATMDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

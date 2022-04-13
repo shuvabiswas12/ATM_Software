@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ATM_Software.Database
 {
-    public class ATMDbContext : IdentityDbContext
+    public class ATMDbContext : IdentityDbContext<CustomIdentityUser>
     {
         public ATMDbContext(DbContextOptions<ATMDbContext> options) : base(options)
         {
