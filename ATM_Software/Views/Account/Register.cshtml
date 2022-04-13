@@ -5,6 +5,8 @@
     
 }
 
+@model RegisterViewModel;
+
 <div class="half">
     <div class="bg order-1 order-md-2"></div>
     <div class="contents order-2 order-md-1">
@@ -15,21 +17,24 @@
                     <div class="form-block">
                         <div class="text-center mb-5">
                             <h3>Do not have an account? <br /> <strong>Register</strong></h3>
-                            <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
                         </div>
-                        <form action="#" method="post">
+                        <form asp-action="Register" asp-controller="Account" method="post">
+                            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                             <div class="form-group first">
-                                <label for="username">Email</label>
-                                <input type="text" class="form-control" placeholder="your-email@gmail.com" id="username">
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" type="text" class="form-control" placeholder="your-email@gmail.com">
+                                <span class="text-danger" asp-validation-for="Email"></span>
                             </div>
                             <div class="form-group last mb-3">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" placeholder="Your Password" id="password">
+                                <label asp-for="Password"></label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Your Password">
+                                <span class="text-danger" asp-validation-for="Password"></span>
                             </div>
                             <div class="form-group last mb-4">
-                                <label for="nid">National ID</label>
-                                <input type="text" class="form-control" placeholder="Your national identity number" id="nid">
+                                <label asp-for="NationalID">National ID</label>
+                                <input asp-for="NationalID" type="text" class="form-control" placeholder="Your national identity number">
                                 <span class="text-warning"><span class="text-danger">**</span> Later, you must have to submit your national identity card!</span>
+                                <span class="text-danger" asp-validation-for="NationalID"></span>
                             </div>
 
                             <input type="submit" value="Register" class="btn btn-block btn-primary">
@@ -40,6 +45,8 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}
