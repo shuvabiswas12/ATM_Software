@@ -12,5 +12,10 @@ namespace ATM_Software.Controllers
         {
             return View();
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
     }
 }
