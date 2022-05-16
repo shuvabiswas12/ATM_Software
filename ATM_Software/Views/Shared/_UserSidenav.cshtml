@@ -1,0 +1,38 @@
+﻿
+
+<div class="d-flex flex-column justify-content-between flex-shrink-0 bg-light"
+     id="sidenav">
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="@(ViewBag.Current == "Withdraw" ? " menu-item " : "") my-2">
+            <a asp-controller="WithdrawCash"
+               asp-action="Withdraw"
+               class="nav-link mx-2 @(ViewBag.Current == "Withdraw" ? " " : "link-dark")"
+               aria-current="page">
+                Withdraw Cash
+            </a>
+        </li>
+        <li class="@(ViewBag.Current == "Transfer" ? " menu-item " : "") my-2">
+            <a asp-controller="CashTransfer"
+               asp-action="Transfer"
+               class="nav-link mx-2 @(ViewBag.Current == "Transfer" ? " " : "link-dark")">
+                Cash Transfer
+            </a>
+        </li>
+        <li class="my-2">
+            <a href="#" class="nav-link mx-2 link-dark">
+                Deposit Cash
+            </a>
+        </li>
+        <li class="my-2">
+            <a href="#" class="nav-link mx-2 link-dark">
+                Display Balance
+            </a>
+        </li>
+    </ul>
+    <div>
+        <hr />
+        <div class="dropdown mx-2 p-2">
+            <strong>Exit</strong>
+        </div>
+    </div>
+</div>
