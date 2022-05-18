@@ -5,7 +5,7 @@
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="@(ViewBag.Current == "Withdraw" ? " menu-item " : "") my-2">
             <a asp-controller="WithdrawCash"
-               asp-action="Withdraw"
+               asp-action="Index"
                class="nav-link mx-2 @(ViewBag.Current == "Withdraw" ? " " : "link-dark")"
                aria-current="page">
                 Withdraw Cash
@@ -13,7 +13,7 @@
         </li>
         <li class="@(ViewBag.Current == "Transfer" ? " menu-item " : "") my-2">
             <a asp-controller="CashTransfer"
-               asp-action="Transfer"
+               asp-action="Index"
                class="nav-link mx-2 @(ViewBag.Current == "Transfer" ? " " : "link-dark")">
                 Cash Transfer
             </a>

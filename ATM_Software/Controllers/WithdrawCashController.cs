@@ -8,7 +8,7 @@ namespace ATM_Software.Controllers
 {
     public class WithdrawCashController : Controller
     {
-        public IActionResult Withdraw()
+        public IActionResult Index()
         {
             ViewBag.Current = "Withdraw";
             return View();

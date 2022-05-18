@@ -8,7 +8,7 @@ namespace ATM_Software.Controllers
 {
     public class CashTransferController : Controller
     {
-        public IActionResult Transfer()
+        public IActionResult Index()
         {
             ViewBag.Current = "Transfer";
             return View();
