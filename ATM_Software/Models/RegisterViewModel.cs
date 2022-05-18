@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ATM_Software.Utilities.CustomValidations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace ATM_Software.Models
     {
         [Required]
         [DataType(DataType.EmailAddress)]
+        [ValidEmailDomain(allowedDomain:"gmail.com", ErrorMessage = "Email domain should be gmail.com.")]
         public string Email { get; set; }
 
         [Required]

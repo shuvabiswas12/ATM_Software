@@ -284,3 +284,8 @@ h2 {
     background-color: #fff;
     overflow: hidden;
 }
+
+.navbar { 
+	padding-top: .7rem;
+	padding-bottom: .7rem;
+}
