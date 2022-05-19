@@ -1,0 +1,92 @@
+﻿
+@model BankAccountViewModel;
+
+<partial name="_AdminNav" />
+
+<section class="d-flex" id="admin">
+
+    <partial name="_AdminSidenav" />
+
+    <div class="container my-1 mx-4" id="admin-main">
+        <form asp-controller="Admin" asp-action="CreateAccount" method="post">
+
+            @Html.AntiForgeryToken()
+            
+            <div class="row">
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            </div>
+
+            <div class="row col-6">
+                <div class="form-floating mt-4">
+                    <input type="text"
+                           class="form-control"
+                           asp-for="BankAccountModel.LoginID"
+                           placeholder="Login" />
+                    <label asp-for="BankAccountModel.LoginID" class="mx-3"></label>
+                    <span class="text-danger" asp-validation-for="BankAccountModel.LoginID"></span>
+                </div>
+
+                <div class="form-floating mt-4">
+                    <input type="number"
+                           class="form-control"
+                           asp-for="BankAccountModel.PinCode"
+                           placeholder="PIN code" />
+                    <label asp-for="BankAccountModel.PinCode" class="mx-3"></label>
+                    <span class="text-danger" asp-validation-for="BankAccountModel.PinCode"></span>
+                </div>
+
+                <div class="form-floating mt-4">
+                    <input type="text"
+                           class="form-control"
+                           asp-for="BankAccountModel.HolderName"
+                           placeholder="Login" />
+                    <label asp-for="BankAccountModel.HolderName" class="mx-3"></label>
+                    <span class="text-danger" asp-validation-for="BankAccountModel.HolderName"></span>
+                </div>
+
+                <div class="form-floating mb-3 mt-4">
+                    <input type="number"
+                           class="form-control"
+                           asp-for="BankAccountModel.Balance"
+                           placeholder="Balance" />
+                    <label asp-for="BankAccountModel.Balance" class="mx-3">Starting balance</label>
+                    <span class="text-danger" asp-validation-for="BankAccountModel.Balance"></span>
+                </div>
+
+                <div class="form-group mb-3 mt-4">
+                    <label class="label" asp-for="BankAccountModel.AccountType"></label>
+                    <select asp-for="BankAccountModel.AccountType"
+                            asp-items="@Model.AccountTypeDropdown"
+                            class="form-control">
+                    </select>
+                </div>
+
+                <div class="form-group mb-3 mt-4">
+                    <label class="label" asp-for="BankAccountModel.AccountIsActive">Account status</label>
+                    <select asp-for="BankAccountModel.AccountIsActive"
+                            asp-items="@Model.AccountStatusDropdown"
+                            class="form-control">
+                    </select>
+                </div>
+
+                <div class="checkbox mt-2">
+                    <div class="d-flex justify-content-end my-5">
+                        <button class="btn btn-outline-success">
+                            Create
+                        </button>
+                    </div>
+
+                    <div>
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
