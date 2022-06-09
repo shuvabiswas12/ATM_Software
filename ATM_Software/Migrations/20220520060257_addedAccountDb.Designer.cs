@@ -4,14 +4,16 @@ using ATM_Software.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ATM_Software.Migrations
 {
     [DbContext(typeof(ATMDbContext))]
-    partial class ATMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220520060257_addedAccountDb")]
+    partial class addedAccountDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

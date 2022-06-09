@@ -1,4 +1,6 @@
 ﻿
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ATM_Software.Database.CustomIdentityUser> SignInManager
 
 <div class="d-flex flex-column justify-content-between flex-shrink-0 bg-light"
      id="sidenav">
@@ -31,9 +33,14 @@
     </ul>
     <div>
         <hr />
-        <div class="dropdown mx-2 p-2">
-            <strong>Exit</strong>
-        </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="dropdown mx-2 p-2">
+                <button asp-controller="Account" asp-action="LogOut">
+                    <strong>Exit</strong>
+                </button>
+            </div>
+        }
         <div>&nbsp;</div>
     </div>
 </div>

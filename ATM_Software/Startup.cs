@@ -31,6 +31,24 @@ namespace ATM_Software
             // .... my added are given bellow
             services.AddDbContext<ATMDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<CustomIdentityUser, IdentityRole>().AddEntityFrameworkStores<ATMDbContext>();
+
+
+            services.AddAuthentication().AddCookie("MyCookieAuth", options =>
+            {
+                options.Cookie.Name = "MyCookieAuth";
+                options.LoginPath = "/Account/IsAuthenticate";
+                options.AccessDeniedPath = "/AccessDenied/Index";
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin",
+                    policy => policy.RequireClaim("ADMIN", "ADMIN"));
+
+                options.AddPolicy("BankAccountUser",
+                    policy => policy.RequireClaim("BANKACCOUNTUSER", "BANKACCOUNTUSER"));
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

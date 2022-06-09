@@ -11,16 +11,17 @@ namespace ATM_Software.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [MinLength(4, ErrorMessage = "LoginId should not smaller than 4 digits.")]
-        [MaxLength(8, ErrorMessage = "LoginId should not larger than 8 digits.")]
+        [Display(Name = "Login ID")]
         public string LoginID { get; set; }
 
-        [Required]
-        [MaxLength(5, ErrorMessage = "Pincode should not larger than 5 digits")]
-        [MinLength(4, ErrorMessage = "Pincode should not smaller than 4 digits.")]
+
         [Display(Name = "Pin Code")]
         public string PinCode { get; set; }
+
+        [Required]
+        [Display(Name = "Country Identity / NID")]
+        [MinLength(5, ErrorMessage = "Country Identity or NID length should not less than 5 digits.")]
+        public string Nid { get; set; }
 
         [Required]
         [Display(Name = "Holder's Name")]
@@ -29,8 +30,13 @@ namespace ATM_Software.Models
         public string HolderName { get; set; }
 
         [Required]
+        [EmailAddress]
+        [ValidEmailDomain(allowedDomain: "gmail.com", ErrorMessage = "Domain should be gmail.com.")]
+        public string Email { get; set; }
+
+        [Required]
         [Display(Name = "Starting Balance")]
-        [ValidStartingBalance(startingBalance: 500, ErrorMessage = "Minimum starting balance should be 500 Taka.")]
+        [ValidStartingBalance(startingBalance: 499, ErrorMessage = "Minimum starting balance should be 500 Taka.")]
         public double Balance { get; set; }
 
         [Required]

@@ -1,54 +1,49 @@
 ﻿
-<partial name="_Usernav"/>
+@model WithdrawCashModel;
+
+<partial name="_Usernav" />
 
 <section class="d-flex" id="user">
-    <partial name="_UserSidenav"/>
+    <partial name="_UserSidenav" />
 
     <div class="container m-4">
+
+        <div class="row">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        </div>
+
         <div class="row col-8">
             <div class="form-group">
-                <label for="select-withdraw-mode" class="label">Select withdraw mode</label>
+                <label asp-for="@Model.WithdrawMode" class="label">Select withdraw mode</label>
                 <select id="cashOption"
-                        name="cashOption"
+                        asp-for="@Model.WithdrawMode"
+                        asp-items="DropdownService.GetWithdrawModeDropdown()"
                         class="form-control">
-                    <option value="1" selected>Fast cash</option>
-                    <option value="2">Normal cash</option>
                 </select>
             </div>
 
             <div class="form-floating mb-3 mt-4" id="normalCash">
                 <input type="number"
                        class="form-control"
-                       id="normal-cash"
+                       asp-for="@Model.Amount"
                        placeholder="Example: 14000" />
-                <label for="normal-cash" class="mx-3">Normal cash</label>
+                <label asp-for="@Model.Amount" class="mx-3">Normal cash</label>
                 <span class="text-muted">Example: 14000</span>
+                <span asp-validation-for="@Model.Amount" class="text-danger"></span>
             </div>
 
             <div class="form-group my-4" id="fastCash">
                 <label class="label" for="Fast-cash-options">Fast cash options</label>
                 <br />
+
                 <div class="form-check">
-                    <input id="500"
-                           name="fastCashOption"
-                           type="radio"
-                           class="my-2" />
-                    &nbsp; <label for="500">500</label>
+                    @foreach (var fastCashOption in RadiobuttonService.GetFastCashOptions())
+                    {
+                        @Html.RadioButtonFor(model => model.Amount, fastCashOption, new { @class = "my-2", @value = fastCashOption, @id = fastCashOption })
+                        <label for="@fastCashOption">&nbsp; @fastCashOption</label> <br />
+                    }
                 </div>
-                <div class="form-check">
-                    <input id="1000"
-                           name="fastCashOption"
-                           type="radio"
-                           class="my-2" />
-                    &nbsp; <label for="1000">1000</label> <br />
-                </div>
-                <div class="form-check">
-                    <input id="5000"
-                           name="fastCashOption"
-                           type="radio"
-                           class="my-2" />
-                    &nbsp; <label for="5000">5000</label> <br />
-                </div>
+
             </div>
 
             <div class="checkbox">
@@ -84,23 +79,30 @@
 </section>
 
 <script>
-            var select = document.getElementById("cashOption");
-            var fastCash = document.getElementById("fastCash");
-            var normalCash = document.getElementById("normalCash");
+    var select = document.getElementById("cashOption");
+    var fastCash = document.getElementById("fastCash");
+    var normalCash = document.getElementById("normalCash");
 
-            var selectdOptions = 0;
-            console.log(select.value);
-            select.addEventListener("change", () => {
-                selectdOptions = select.value;
+    var selectdOptions = 0;
+    console.log(select.value);
+    select.addEventListener("change", () => {
+        selectdOptions = select.value;
 
-                if (selectdOptions == 1) {
-                    //
-                    normalCash.style.display = "none";
-                    fastCash.style.display = "block";
-                } else {
-                    //
-                    fastCash.style.display = "none";
-                    normalCash.style.display = "block";
-                }
-            });
+        if (selectdOptions === "FastCash") {
+            //
+            normalCash.style.display = "none";
+            fastCash.style.display = "block";
+        } else {
+            //
+            fastCash.style.display = "none";
+            normalCash.style.display = "block";
+        }
+    });
 </script>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}

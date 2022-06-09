@@ -8,6 +8,17 @@ namespace ATM_Software.Utilities.Services
 {
     public class DropdownService
     {
+
+        public static IEnumerable<SelectListItem> GetWithdrawModeDropdown()
+        {
+            IEnumerable<SelectListItem> withdrawModeDropdown = new[]
+            {
+                new SelectListItem {Value = "FastCash".ToString(), Text = "Fast Cash".ToString()},
+                new SelectListItem {Value = "NormalCash".ToString(), Text = "Normal Cash".ToString()},
+            };
+            return withdrawModeDropdown;
+        }
+
         public static IEnumerable<SelectListItem> GetAccountStatus()
         {
             IEnumerable<SelectListItem> accountStatusDropDown = new[]

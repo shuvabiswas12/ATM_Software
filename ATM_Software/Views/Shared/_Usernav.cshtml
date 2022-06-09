@@ -1,4 +1,6 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ATM_Software.Database.CustomIdentityUser> SignInManager
+
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow">
         <div class="container">
@@ -10,14 +12,31 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
+
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                    }
+                    else
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="WithdrawCash" asp-action="Index">Cash</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Administration" asp-action="Index">Create Role</a>
+                        </li>
+                    }
+
                     <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        <a class="nav-link text-white" asp-controller="Account" asp-action="AdminLogin">Admin</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="WithdrawCash" asp-action="Index">Cash</a>
-                    </li>
+
                 </ul>
             </div>
         </div>

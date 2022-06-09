@@ -1,5 +1,6 @@
 ﻿using ATM_Software.Models;
 using ATM_Software.Utilities.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace ATM_Software.Controllers.Admin
     {
         [Route("Admin/")]
         [Route("[controller]/[action]")]
+        [Authorize]
         [HttpGet]
         public IActionResult CreateAccount()
         {
@@ -27,11 +29,14 @@ namespace ATM_Software.Controllers.Admin
         [Route("[controller]/[action]")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(policy: "AdminRoles")]
         public IActionResult CreateAccount(BankAccountViewModel bankAccountViewModel)
         {
             if (ModelState.IsValid)
             {
                 bankAccountViewModel.BankAccountModel.AccountNumber = CreateAccountService.GenerateAccountNumber();
+                bankAccountViewModel.BankAccountModel.LoginID = CreateAccountService.GenerateLoginId();
+                bankAccountViewModel.BankAccountModel.PinCode = CreateAccountService.GeneratePincode();
 
                 if (CreateAccountService.CreateAccount(bankAccountViewModel.BankAccountModel))
                 {
@@ -45,11 +50,13 @@ namespace ATM_Software.Controllers.Admin
             return View(bankAccountViewModel);
         }
 
+        [Authorize(policy: "AdminRoles")]
         public IActionResult UpdateAccount()
         {
             return View();
         }
 
+        [Authorize(policy: "AdminRoles")]
         public IActionResult DeleteAccount()
         {
             return View();

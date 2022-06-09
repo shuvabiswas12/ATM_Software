@@ -1,0 +1,17 @@
+﻿@model CreateRoleVM;
+
+    <partial name="_Usernav" />
+
+<div class="container">
+    <form asp-action="CreateRoles" method="post" class="col-6 my-2">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label asp-for="RoleName"></label>
+            <input asp-for="RoleName" class="form-control" />
+        </div>
+
+        <div>
+            <button class="btn btn-success my-2" type="submit">Create Role</button>
+        </div>
+    </form>
+</div>

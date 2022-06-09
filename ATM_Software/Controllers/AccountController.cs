@@ -1,10 +1,12 @@
 ﻿using ATM_Software.Database;
 using ATM_Software.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ATM_Software.Controllers
@@ -23,38 +25,98 @@ namespace ATM_Software.Controllers
         }
 
         [HttpGet]
+        [Route("Account/Admin")]
+        [Route("Account/AdminLogin")]
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdminLogin(AdminLoginViewModel adminLoginViewModel)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("Account/Login")]
+        [Route("Account/UserLogin")]
+        [Route("Account/User")]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginData)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel loginData, string returnUrl)
         {
+
+
             if (ModelState.IsValid)
             {
 
-                var result = await this._signInManager.PasswordSignInAsync(loginData.Email, loginData.Password, loginData.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                if (loginData.LoginID.ToString().ToLower() == "user1" && loginData.Password.ToString() == "USEr1@1234")
                 {
-                    return RedirectToAction("Index", "Home");
+                    var user = new CustomIdentityUser()
+                    {
+                        UserName = loginData.LoginID,
+                        Email = loginData.LoginID,
+                        LoginID = loginData.LoginID,
+                    };
+
+                    var isUserExist = await _usermanager.FindByEmailAsync(user.Email);
+
+                    IdentityResult result = null;
+
+                    if (isUserExist == null)
+                    {
+                        result = await this._usermanager.CreateAsync(user, loginData.Password);
+
+
+                        if (result.Succeeded) { await this.SignInTask(user: loginData, ReturnUrl: returnUrl); }
+
+                    }
+                    else
+                    {
+                        await this.SignInTask(user: loginData, ReturnUrl: returnUrl);
+                    }
+
+                    foreach (IdentityError error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+
                 }
-                ModelState.AddModelError("", "Invalid login attempt.");
-                ViewBag.IsError = "true";
             }
+
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Register()
+        private async Task<IActionResult> SignInTask(string ReturnUrl, LoginViewModel user)
         {
-            return View();
+            var result = await _signInManager.PasswordSignInAsync(user.LoginID, user.Password, false, false);
+            if (result.Succeeded)
+            {
+                if (!string.IsNullOrEmpty(ReturnUrl))
+                    return Redirect(ReturnUrl);
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.IsError = "true";
+            ModelState.AddModelError(string.Empty, "Invalid Credentials!");
+
+            return RedirectToAction("Index", "Account");
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterViewModel registrationData)
+        public async Task<IActionResult> LogOut()
         {
-            return View();
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
+
     }
 }

@@ -9,5 +9,6 @@ namespace ATM_Software.Database
     public class CustomIdentityUser : IdentityUser
     {
         public string NationalID { get; set; }
+        public string LoginID { get; set; }
     }
 }

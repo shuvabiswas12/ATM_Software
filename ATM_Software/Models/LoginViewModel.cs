@@ -9,14 +9,12 @@ namespace ATM_Software.Models
     public class LoginViewModel
     {
         [Required]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        [Display(Name = "Login ID")]
+        public string LoginID { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Pin code")]
         public string Password { get; set; }
-
-        [Display(Name = "Remember me")]
-        public bool RememberMe { get; set; }
     }
 }
